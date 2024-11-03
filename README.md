@@ -1,3 +1,6 @@
+# Cài đặt môi trường Python
+
+# Cài đặt code
 ## Bước 1: Tải code
 Ở nút `Code` màu xanh trên cùng, ấn và chọn `Download ZIP`
 
