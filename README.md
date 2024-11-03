@@ -1,5 +1,5 @@
 # Cài đặt môi trường Python
-update something 
+update something 'dev'
 # Cài đặt code
 ## Bước 1: Tải code
 Ở nút `Code` màu xanh trên cùng, ấn và chọn `Download ZIP`
