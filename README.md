@@ -1,5 +1,9 @@
 # Cài đặt môi trường Python
-update something 
+Follow the guidance (Step 1) in link below
+
+https://aptechvietnam.com.vn/huong-dan-lap-trinh-python-voi-visual-studio-code
+
+
 # Cài đặt code
 ## Bước 1: Tải code
 Ở nút `Code` màu xanh trên cùng, ấn và chọn `Download ZIP`
