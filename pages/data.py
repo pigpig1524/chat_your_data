@@ -1,40 +1,41 @@
 import streamlit as st
-# import pandas as pd
 import pdfplumber # for pdf extract
 import io
+import pandas as pd
 from docx import Document
 import uuid
-# from sentence_transformers import SentenceTransformer
 from utils.chunking import Chunker
 from utils.indexing import Indexer
-from config import LOGO, NO_CHUNKING, EN, VI, NONE, USER, ASSISTANT, ENGLISH, VIETNAMESE, ONLINE_LLM, LOCAL_LLM, GEMINI, DEFAULT_LOCAL_LLM, OPENAI, DB
+from config import LOGO
 
-
-heders = [
-    '1. Select your language',
-    'Data settings'
-]
 
 # Page settings
 st.sidebar.header('Chat with your data')
 st.sidebar.markdown("Using LLM and the RAG system.")
-st.logo(LOGO)
+st.logo(LOGO, size='large')
 
 
 # User upload data
-st.header(heders[1])
+st.header('Tải lên dữ liệu của bạn')
 uploaded_files = st.file_uploader(
-    label='Upload your file', 
+    label='Chọn file để tải lên', 
     type=['pdf', 'docx', 'doc'], 
     accept_multiple_files=True
 )
+st.session_state.files=uploaded_files
 
+
+if st.session_state.files:
+    files_name = pd.Series([x.name for x in st.session_state.files])
+    st.dataframe(
+        data=files_name,
+        hide_index=True
+    )
 
 if uploaded_files is not None:
     all_data = ''
-    
     for uploaded_file in uploaded_files:
-        print(uploaded_file.type)
+        # print(uploaded_file.type)
         # Determine file type and read accordingly
 
         if uploaded_file.name.endswith(".pdf"):
@@ -52,9 +53,10 @@ if uploaded_files is not None:
         else:
             st.error("Unsupported file format.")
             
-    # st.session_state.data_saved_success = True
+    
     if all_data:
         st.success('Data processed successfully!')
+        st.session_state.data_saved_success = True
 
         st.subheader("Chunking")
         chunker = Chunker()
@@ -62,7 +64,6 @@ if uploaded_files is not None:
         try:
             nodes = chunker.chunk(text=all_data)
             st.success('Chunked successfully!')
-            # st.write(nodes)
         except:
             st.error('Chunk failed')
     
@@ -79,4 +80,3 @@ if uploaded_files is not None:
                     st.session_state['index'] = index
             except:
                 st.error('Index failed')
-
