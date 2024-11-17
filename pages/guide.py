@@ -3,7 +3,7 @@ from config import LOGO
 
 st.sidebar.header('Chat with your data')
 st.sidebar.markdown("Using LLM and the RAG system.")
-st.logo(LOGO)
+st.logo(LOGO, size='large')
 
 st.title('Hướng dẫn sử dụng')
 st.warning('Hiện tại, data chỉ lưu giữ trong một session (Khi refresh sẽ mất data) --> Update code sau')

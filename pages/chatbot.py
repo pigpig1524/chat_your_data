@@ -7,9 +7,9 @@ def init_msg():
         st.session_state.messages = [{'role': 'assistant', 'content': GREETING}]
 
 
-st.logo(LOGO)
+st.logo(LOGO, size='large')
 
-if not st.session_state.data_saved_success:
+if not st.session_state.index:
     st.warning('You have to upload your data first!')
 else:
     agent = Agent(st.session_state.index)
