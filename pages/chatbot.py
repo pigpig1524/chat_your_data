@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st # type: ignore
 from config import LOGO, GREETING
 from utils.agent import Agent
 
@@ -10,7 +10,7 @@ def init_msg():
 st.logo(LOGO, size='large')
 
 if not st.session_state.index:
-    st.warning('You have to upload your data first!')
+    st.warning('Vui lòng tải lên dữ liệu!')
 else:
     agent = Agent(st.session_state.index)
     if 'message' not in st.session_state:
@@ -31,6 +31,7 @@ else:
         response = agent.run(user_input)
         # Display assistant response in chat message container
         with st.chat_message("assistant"):
+            # st.write_stream(response)
             st.markdown(response)
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})

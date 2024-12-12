@@ -1,31 +1,33 @@
 import streamlit as st # type: ignore
 from config import LOGO
 
-st.sidebar.header('Chat with your data')
-st.sidebar.markdown("""
-**Nhóm tác giả**
-                    
+st.sidebar.title('App name here')
+st.sidebar.write('Mô tả ngắn / slogan here')
+
+st.sidebar.header('Nhóm tác giả')
+st.sidebar.markdown("""                    
     Văn Hiếu Học
+                    
     Phạm Minh Thy
 """)
 
-st.session_state['language'] = st.sidebar.selectbox('Chọn ngôn ngữ', ('Tiếng Việt', 'English'))
+# st.session_state['language'] = st.sidebar.selectbox('Chọn ngôn ngữ', ('Tiếng Việt', 'English'))
 
 st.logo(LOGO, size='large')
 
 st.title('Hướng dẫn sử dụng')
-st.warning('Hiện tại, data chỉ lưu giữ trong một session (Khi refresh sẽ mất data) --> Update code sau')
+st.warning('Hiện tại, dữ liệu chỉ lưu giữ trong một phiên (Khi tải lại trang sẽ mất)')
 
 st.header('Bước 1: Upload data')
 st.markdown("""
-    * Truy cập vào thẻ `Your data`
-    * Upload data: hiện hỗ trợ file PDF, DOCX/DOC
-    * Quá trình xử lý data sẽ được log ra màn hình --> Cuối cùng nhấn `Save data`
+    * Truy cập vào thẻ `Dữ liệu`
+    * Tải lên dữ liệu: hiện chỉ hỗ trợ file PDF, DOCX/DOC
+    * Quá trình xử lý dữ liệu sẽ được ghi ra màn hình $\\rightarrow$ Cuối cùng nhấn `Lưu dữ liệu`
 """)
 
-st.header('Bước 2: Chat thôi nào!')
+st.header('Bước 2: Chat thôi!')
 st.markdown("""
 Chuyển sang thẻ `Chat bot` và tiến hành hỏi đáp với data của bạn!
 """)
 
-st.warning('Hiện tại các chức năng thêm, xóa data đang được dev!')
+# st.warning('Hiện tại các chức năng thêm, xóa data đang được dev!')
