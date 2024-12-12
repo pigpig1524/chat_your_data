@@ -1,8 +1,8 @@
-import streamlit as st
-import pdfplumber # for pdf extract
+import streamlit as st # type: ignore
+import pdfplumber #type: ignore
 import io
-import pandas as pd
-from docx import Document
+import pandas as pd # type: ignore
+from docx import Document # type: ignore
 import uuid
 from utils.chunking import Chunker
 from utils.indexing import Indexer
@@ -10,10 +10,19 @@ from config import LOGO
 
 
 # Page settings
-st.sidebar.header('Chat with your data')
-st.sidebar.markdown("Using LLM and the RAG system.")
+st.sidebar.title('App name here')
+st.sidebar.write('Mô tả ngắn / slogan here')
+
+st.sidebar.header('Nhóm tác giả')
+st.sidebar.markdown("""                    
+    Văn Hiếu Học
+                    
+    Phạm Minh Thy
+""")
+
 st.logo(LOGO, size='large')
 
+# st.write('Ngôn ngữ là' + st.session_state['language'])
 
 # User upload data
 st.header('Tải lên dữ liệu của bạn')
@@ -25,13 +34,18 @@ uploaded_files = st.file_uploader(
 st.session_state.files=uploaded_files
 
 
-if st.session_state.files:
-    files_name = pd.Series([x.name for x in st.session_state.files])
-    st.dataframe(
-        data=files_name,
-        hide_index=True
-    )
+# st.header('Inputthe link: ')
+# input_url = st.text_input('Input your link and press Enter')
 
+
+# if st.session_state.files:
+#     files_name = pd.Series([x.name for x in st.session_state.files])
+#     st.dataframe(
+#         data=files_name,
+#         hide_index=True
+#     )
+
+# all_data = ''
 if uploaded_files is not None:
     all_data = ''
     for uploaded_file in uploaded_files:
@@ -51,32 +65,32 @@ if uploaded_files is not None:
             for text in docx_text:
                 all_data += f"{text}\n"
         else:
-            st.error("Unsupported file format.")
+            st.error("Định dạng file không được hỗ trợ")
             
     
     if all_data:
-        st.success('Data processed successfully!')
+        st.success('Dữ liệu đã được xử lý thành công!')
         st.session_state.data_saved_success = True
 
-        st.subheader("Chunking")
+        st.subheader("Phân mảnh dữ liệu (Chunking)")
         chunker = Chunker()
         nodes = None
         try:
             nodes = chunker.chunk(text=all_data)
-            st.success('Chunked successfully!')
+            st.success('Dữ liệu được chunk thành công!')
         except:
-            st.error('Chunk failed')
+            st.error('Đã xảy ra lỗi khi chunk dữ liệu')
     
         if nodes:
-            st.subheader('Indexing')
+            st.subheader('Định mục dữ liệu (Indexing)')
             indexer = Indexer()
             try:
                 index = indexer.index(nodes)
-                st.success('Index successfully')
-                save = st.button('Save data')
+                st.success('Định mục dữ liệu thành công!')
+                save = st.button('Lưu dữ liệu')
                 if save:
-                    st.success('saved!')
+                    st.success('Dữ liệu đã lưu thành công!')
                     st.session_state.data_saved_success = True
                     st.session_state['index'] = index
             except:
-                st.error('Index failed')
+                st.error('Đã xảy ra lỗi khi định mục')
