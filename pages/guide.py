@@ -1,8 +1,16 @@
-import streamlit as st
+import streamlit as st # type: ignore
 from config import LOGO
 
 st.sidebar.header('Chat with your data')
-st.sidebar.markdown("Using LLM and the RAG system.")
+st.sidebar.markdown("""
+**Nhóm tác giả**
+                    
+    Văn Hiếu Học
+    Phạm Minh Thy
+""")
+
+st.session_state['language'] = st.sidebar.selectbox('Chọn ngôn ngữ', ('Tiếng Việt', 'English'))
+
 st.logo(LOGO, size='large')
 
 st.title('Hướng dẫn sử dụng')
@@ -15,7 +23,7 @@ st.markdown("""
     * Quá trình xử lý data sẽ được log ra màn hình --> Cuối cùng nhấn `Save data`
 """)
 
-st.header('Bước 2: Chat hoy')
+st.header('Bước 2: Chat thôi nào!')
 st.markdown("""
 Chuyển sang thẻ `Chat bot` và tiến hành hỏi đáp với data của bạn!
 """)
