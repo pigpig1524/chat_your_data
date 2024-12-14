@@ -1,8 +1,8 @@
 import streamlit as st # type: ignore
 from config import LOGO
 
-st.sidebar.title('App name here')
-st.sidebar.write('Mô tả ngắn / slogan here')
+st.sidebar.title('Q&A Data Assistant')
+st.sidebar.write('Immediately get your data insights')
 
 st.sidebar.header('Nhóm tác giả')
 st.sidebar.markdown("""                    
