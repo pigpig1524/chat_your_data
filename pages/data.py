@@ -7,6 +7,8 @@ import uuid
 from utils.chunking import Chunker
 from utils.indexing import Indexer
 from config import LOGO
+from io import BytesIO, FileIO
+import gdown
 
 
 # Page settings
@@ -25,14 +27,27 @@ st.logo(LOGO, size='large')
 # st.write('Ngôn ngữ là' + st.session_state['language'])
 
 # User upload data
-st.header('Tải lên dữ liệu của bạn')
+st.subheader('Tải lên dữ liệu từ máy tính')
 uploaded_files = st.file_uploader(
     label='Chọn file để tải lên', 
     type=['pdf', 'docx', 'doc'], 
     accept_multiple_files=True
 )
-st.session_state.files=uploaded_files
+st.session_state.files = uploaded_files
 
+
+st.subheader('Tải lên dữ liệu từ kho lưu trữ trực tuyến')
+with st.form('link_upload'):
+    link = st.text_input('Dán link công khai (public link) đến tệp dữ liệu của bạn')
+    submit = st.form_submit_button('Hoàn tất')
+
+if submit:
+    link_file = BytesIO()
+    try:
+        gdown.download(url=link, output=link_file, fuzzy=True)
+        st.session_state.link_file = link_file
+    except:
+        st.error(':worried: Không thể tải xuống dữ liệu từ đường dẫn')
 
 # st.header('Inputthe link: ')
 # input_url = st.text_input('Input your link and press Enter')
@@ -46,9 +61,9 @@ st.session_state.files=uploaded_files
 #     )
 
 # all_data = ''
-if uploaded_files is not None:
+if st.session_state.files or st.session_state.link_file:
     all_data = ''
-    for uploaded_file in uploaded_files:
+    for uploaded_file in st.session_state.files:
         # print(uploaded_file.type)
         # Determine file type and read accordingly
 
@@ -67,7 +82,14 @@ if uploaded_files is not None:
         else:
             st.error("Định dạng file không được hỗ trợ")
             
+    if st.session_state.link_file:
+        doc = Document(st.session_state.link_file)
+        docx_text = [para.text for para in doc.paragraphs if para.text]
+
+        for text in docx_text:
+            all_data += f"{text}\n"
     
+
     if all_data:
         st.success('Dữ liệu đã được xử lý thành công!')
         st.session_state.data_saved_success = True

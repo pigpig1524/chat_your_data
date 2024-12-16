@@ -14,6 +14,8 @@ st.sidebar.markdown("""
 # st.session_state['language'] = st.sidebar.selectbox('Chọn ngôn ngữ', ('Tiếng Việt', 'English'))
 
 st.logo(LOGO, size='large')
+# st.sidebar.image(LOGO)
+
 
 st.title('Hướng dẫn sử dụng')
 st.warning('Hiện tại, dữ liệu chỉ lưu giữ trong một phiên (Khi tải lại trang sẽ mất)')
@@ -25,9 +27,10 @@ st.markdown("""
     * Quá trình xử lý dữ liệu sẽ được ghi ra màn hình $\\rightarrow$ Cuối cùng nhấn `Lưu dữ liệu`
 """)
 
+st.warning(':warning: Vui lòng không tải lên các dữ liệu quan trọng của bạn (thông tin cá nhân, mật khẩu,...)')
+
 st.header('Bước 2: Chat thôi!')
 st.markdown("""
 Chuyển sang thẻ `Chat bot` và tiến hành hỏi đáp với data của bạn!
 """)
 
-# st.warning('Hiện tại các chức năng thêm, xóa data đang được dev!')
