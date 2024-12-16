@@ -9,6 +9,7 @@ def init_msg():
 
 st.logo(LOGO, size='large')
 
+
 if not st.session_state.index:
     st.warning('Vui lòng tải lên dữ liệu!')
 else:
@@ -23,6 +24,7 @@ else:
 
     if user_input := st.chat_input("Your message:"):
         # Display user message in chat message container
+
         with st.chat_message("user"):
             st.markdown(user_input)
         # Add user message to chat history

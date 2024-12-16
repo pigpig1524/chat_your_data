@@ -2,3 +2,4 @@ pdfplumber==0.11.4
 llama-index==0.11.21
 python-docx==1.1.2
 streamlit==1.39.0
+gdown==5.2.0
