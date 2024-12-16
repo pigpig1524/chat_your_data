@@ -2,7 +2,7 @@ import streamlit as st # type: ignore
 from config import LOGO
 
 st.sidebar.title('Q&A Data Assistant')
-st.sidebar.write('Immediately get your data insights')
+# st.sidebar.write('Immediately get your data insights')
 
 st.sidebar.header('Nhóm tác giả')
 st.sidebar.markdown("""                    
