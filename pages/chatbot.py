@@ -7,6 +7,15 @@ def init_msg():
         st.session_state.messages = [{'role': 'assistant', 'content': GREETING}]
 
 
+# Page settings
+st.sidebar.title('Q&A Data Assistant')
+st.sidebar.header('Nhóm tác giả')
+st.sidebar.markdown("""    
+    Văn Hiếu Học
+                    
+    Phạm Minh Thy
+""")
+
 st.logo(LOGO, size='large')
 
 

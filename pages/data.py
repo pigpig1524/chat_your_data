@@ -9,6 +9,7 @@ from utils.indexing import Indexer
 from config import LOGO
 from io import BytesIO, FileIO
 import gdown
+from pptx import Presentation
 
 
 # Page settings
@@ -16,7 +17,7 @@ st.sidebar.title('Q&A Data Assistant')
 # st.sidebar.write('Immediately get your data insights')
 
 st.sidebar.header('Nhóm tác giả')
-st.sidebar.markdown("""                    
+st.sidebar.markdown("""    
     Văn Hiếu Học
                     
     Phạm Minh Thy
@@ -30,7 +31,7 @@ st.logo(LOGO, size='large')
 st.subheader('Tải lên dữ liệu từ máy tính')
 uploaded_files = st.file_uploader(
     label='Chọn file để tải lên', 
-    type=['pdf', 'docx', 'doc'], 
+    type=['pdf', 'docx', 'doc', 'pptx'], 
     accept_multiple_files=True
 )
 st.session_state.files = uploaded_files
@@ -79,6 +80,16 @@ if st.session_state.files or st.session_state.link_file:
 
             for text in docx_text:
                 all_data += f"{text}\n"
+        elif uploaded_file.name.endswith(".pptx"):
+            presentation = Presentation(io.BytesIO(uploaded_file.read()))
+            slides_text = []
+            for slide in presentation.slides:
+                for shape in slide.shapes:
+                    if hasattr(shape, "text"):
+                        slides_text += [shape.text]
+            for text in slides_text:
+                all_data += f"{text}\n"
+
         else:
             st.error("Định dạng file không được hỗ trợ")
             
