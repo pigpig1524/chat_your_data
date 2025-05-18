@@ -10,7 +10,8 @@ from config import LOGO
 from io import BytesIO, FileIO
 import gdown
 from pptx import Presentation
-
+import textract
+import tempfile
 
 # Page settings
 st.sidebar.title('Q&A Data Assistant')
@@ -73,13 +74,23 @@ if st.session_state.files or st.session_state.link_file:
                 for page in pdf.pages:
                     all_data += f"{page.extract_text()}\n"
 
-        elif uploaded_file.name.endswith(".docx") or uploaded_file.name.endswith(".doc"):
+        elif uploaded_file.name.endswith(".docx"):
             # Extract text from DOCX
             doc = Document(io.BytesIO(uploaded_file.read()))
             docx_text = [para.text for para in doc.paragraphs if para.text]
 
             for text in docx_text:
                 all_data += f"{text}\n"
+        elif uploaded_file.name.endswith(".doc"):
+            # Extract text from .doc using textract
+            try:
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".doc") as tmp_file:
+                    tmp_file.write(uploaded_file.read())
+                    tmp_filepath = tmp_file.name
+                raw_text = textract.process(tmp_filepath).decode("utf-8")
+                all_data += f"{raw_text}\n"
+            except Exception as e:
+                st.error(f"Lỗi khi đọc file .doc: {e}")
         elif uploaded_file.name.endswith(".pptx"):
             presentation = Presentation(io.BytesIO(uploaded_file.read()))
             slides_text = []
