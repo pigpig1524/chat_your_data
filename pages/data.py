@@ -10,8 +10,8 @@ from config import LOGO
 from io import BytesIO, FileIO
 import gdown
 from pptx import Presentation
-import textract
-import tempfile
+# import textract
+# import tempfile
 
 # Page settings
 st.sidebar.title('Q&A Data Assistant')
@@ -28,11 +28,20 @@ st.logo(LOGO, size='large')
 
 # st.write('Ngôn ngữ là' + st.session_state['language'])
 
+# # User upload data
+# st.subheader('Tải lên dữ liệu từ máy tính')
+# uploaded_files = st.file_uploader(
+#     label='Chọn file để tải lên', 
+#     type=['pdf', 'docx', 'doc', 'pptx'], 
+#     accept_multiple_files=True
+# )
+# st.session_state.files = uploaded_files
+
 # User upload data
 st.subheader('Tải lên dữ liệu từ máy tính')
 uploaded_files = st.file_uploader(
     label='Chọn file để tải lên', 
-    type=['pdf', 'docx', 'doc', 'pptx'], 
+    type=['pdf', 'docx', 'pptx'], 
     accept_multiple_files=True
 )
 st.session_state.files = uploaded_files
@@ -81,16 +90,16 @@ if st.session_state.files or st.session_state.link_file:
 
             for text in docx_text:
                 all_data += f"{text}\n"
-        elif uploaded_file.name.endswith(".doc"):
-            # Extract text from .doc using textract
-            try:
-                with tempfile.NamedTemporaryFile(delete=False, suffix=".doc") as tmp_file:
-                    tmp_file.write(uploaded_file.read())
-                    tmp_filepath = tmp_file.name
-                raw_text = textract.process(tmp_filepath).decode("utf-8")
-                all_data += f"{raw_text}\n"
-            except Exception as e:
-                st.error(f"Lỗi khi đọc file .doc: {e}")
+        # elif uploaded_file.name.endswith(".doc"):
+        #     # Extract text from .doc using textract
+        #     try:
+        #         with tempfile.NamedTemporaryFile(delete=False, suffix=".doc") as tmp_file:
+        #             tmp_file.write(uploaded_file.read())
+        #             tmp_filepath = tmp_file.name
+        #         raw_text = textract.process(tmp_filepath).decode("utf-8")
+        #         all_data += f"{raw_text}\n"
+        #     except Exception as e:
+        #         st.error(f"Lỗi khi đọc file .doc: {e}")
         elif uploaded_file.name.endswith(".pptx"):
             presentation = Presentation(io.BytesIO(uploaded_file.read()))
             slides_text = []
